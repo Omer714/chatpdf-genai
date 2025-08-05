@@ -11,14 +11,19 @@ def extract_text_from_pdf(uploaded_file):
         text += page.extract_text()
     return text
 
+import openai
+
+client = openai.OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 def ask_question(prompt, context):
     full_prompt = f"Based on the following PDF content, answer the question:\n\n{context}\n\nQuestion: {prompt}"
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": full_prompt}],
         temperature=0.5
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
+
 
 st.title("📄 Chat with your PDF (GenAI Side Project)")
 
