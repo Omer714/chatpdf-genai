@@ -18,7 +18,7 @@ client = openai.OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 def ask_question(prompt, context):
     full_prompt = f"Based on the following PDF content, answer the question:\n\n{context}\n\nQuestion: {prompt}"
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": full_prompt}],
         temperature=0.5
     )
